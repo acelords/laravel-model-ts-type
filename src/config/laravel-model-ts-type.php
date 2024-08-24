@@ -17,4 +17,7 @@ return [
 
     // The amount of spaces used for indentation
     'indentation_spaces' => 4,
+    
+    // export types by default
+    'export_types' => true,
 ];

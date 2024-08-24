@@ -1,14 +1,12 @@
 <?php
 
-declare(strict_types=1);
+declare (strict_types = 1);
 
 namespace Scrumble\TypeGenerator\Support\TypescriptFormatters;
 
-use UnitEnum;
 use ReflectionEnum;
 use ReflectionException;
-use ReflectionEnumPureCase;
-use ReflectionEnumBackedCase;
+use UnitEnum;
 
 class EnumFormatter
 {
@@ -40,8 +38,15 @@ class EnumFormatter
     {
         $name = $this->getName();
         $values = $this->getValues();
+        $appendExport = config('laravel-model-ts-type.export_types');
 
-        return "type {$name} = {$values};" . PHP_EOL;
+        $append = "";
+
+        if ($appendExport) {
+            $append = "export ";
+        }
+
+        return "{$append}type {$name} = {$values};" . PHP_EOL;
     }
 
     /**
