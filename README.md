@@ -22,6 +22,7 @@ Additional options:
 | `noKebabCase`       |        `false`        | Whether the file name should be formatted to kebab case                                   |
 | `model`             |        `null`         | Choose to generate a model for a specific file. For example you can use `App\Models\User` |
 | `indentationSpaces` |          `4`          | The amount of spaces used for indentation                                                 |
+| `export_types`      |        `true`         | Whether to export the types or not.                                                       |
 
 
 If you want to change the default values you can publish the config file and change it to you liking.
