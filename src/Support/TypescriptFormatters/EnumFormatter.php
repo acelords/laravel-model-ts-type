@@ -38,15 +38,8 @@ class EnumFormatter
     {
         $name = $this->getName();
         $values = $this->getValues();
-        $appendExport = config('laravel-model-ts-type.export_types');
 
-        $append = "";
-
-        if ($appendExport) {
-            $append = "export ";
-        }
-
-        return "{$append}type {$name} = {$values};" . PHP_EOL;
+        return "type {$name} = {$values};" . PHP_EOL;
     }
 
     /**

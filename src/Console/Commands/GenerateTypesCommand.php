@@ -27,7 +27,7 @@ class GenerateTypesCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'types:generate {--modelDir=} {--namespace=} {--outputDir=} {--noKebabCase} {--model=} {--indentationSpaces=}';
+    protected $signature = 'types:generate {--modelDir=} {--namespace=} {--outputDir=} {--noKebabCase} {--model=} {--indentationSpaces=} {--exportTypes=true}';
 
     /**
      * The console command description.
@@ -60,6 +60,11 @@ class GenerateTypesCommand extends Command
      * @var bool
      */
     private bool $useKebabCase;
+    
+    /**
+     * @var bool
+     */
+    private bool $exportTypes = true;
 
     /**
      * @var null|string
@@ -124,6 +129,7 @@ class GenerateTypesCommand extends Command
         $this->namespace = $this->option('namespace') ?? config('laravel-model-ts-type.namespace');
         $this->outputDir = $this->option('outputDir') ?? config('laravel-model-ts-type.output_dir');
         $this->useKebabCase = !($this->option('noKebabCase') ?: config('laravel-model-ts-type.no_kebab_case'));
+        $this->exportTypes = ($this->option('exportTypes') ? filter_var($this->option('exportTypes'), FILTER_VALIDATE_BOOLEAN): config('laravel-model-ts-type.export_types'));
         $this->indentation = $this->formatIndentation();
         $this->model = $this->option('model') ?? null;
 
@@ -185,7 +191,12 @@ class GenerateTypesCommand extends Command
             $baseString = 'declare namespace ' . $namespace . ' {' . PHP_EOL;
         }
 
-        $baseString .= $indent . 'type ' . ucfirst(camel_case($className)) . ' = {' . PHP_EOL;
+        $export = '';
+        if($this->exportTypes) {
+            $export = 'export ';
+        }
+
+        $baseString .= $indent . $export . 'type ' . ucfirst(camel_case($className)) . ' = {' . PHP_EOL;
 
         foreach ($propertyDefinition as $key => $value) {
             $baseString .= $indent . $this->indentation . $key . $value['operator'] . ' ' . $value['value'] . ';' . PHP_EOL;
