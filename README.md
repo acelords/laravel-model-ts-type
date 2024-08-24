@@ -39,7 +39,7 @@ This package takes (almost) all off Laravel's magic into account. It follows the
 ### Example output
 
 ```typescript
-type Company = {
+export type Company = {
     id: number;
     name: string;
     created_at: string /* Date */ | null;
